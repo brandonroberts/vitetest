@@ -1,15 +1,39 @@
 /// <reference types="vitest" />
-import {defineConfig} from 'vite';
+import {defineConfig, transformWithEsbuild} from 'vite';
 
 import angular from '@analogjs/vite-plugin-angular';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig(({mode}) => ({
+  ssr: {
+    noExternal: [/fesm2022/]
+  },  
   plugins: [
     angular(),
     viteTsConfigPaths({
       root: './',
     }),
+    {
+      name: 'test',
+      async transform(_code, id) {
+        if (/fesm2022/.test(id)) {
+          const { code, map } = await transformWithEsbuild(_code, id, {
+            loader: 'js',
+            format: 'esm',
+            target: 'es2016',
+            sourcemap: true,
+            sourcefile: id,
+          });
+    
+          return {
+            code,
+            map,
+          };       
+       }
+
+      return undefined;
+      }
+    }    
   ],
   test: {
     coverage: {

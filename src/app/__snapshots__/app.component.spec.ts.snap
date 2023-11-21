@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AppComponent > should create the app 1`] = `
+AppComponent {
+  "__ngContext__": 8,
+  "render": false,
+  "title": "vitetest",
+}
+`;

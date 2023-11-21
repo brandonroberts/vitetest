@@ -1,10 +1,13 @@
+// @vitest-environment happy-dom
+
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import {HarnessLoader} from "@angular/cdk/testing";
 import {TestbedHarnessEnvironment} from "@angular/cdk/testing/testbed";
 import {MatButtonHarness} from "@angular/material/button/testing";
-import {MatCard} from "@angular/material/card";
+import {MatCardModule} from "@angular/material/card";
 import {MatCardHarness} from "@angular/material/card/testing";
+import { CommonModule } from '@angular/common';
 
 describe('AppComponent', () => {
 
@@ -13,6 +16,7 @@ describe('AppComponent', () => {
   let component: AppComponent;
 
   beforeEach(() => TestBed.configureTestingModule({
+    imports: [MatCardModule, CommonModule],
     declarations: [AppComponent]
   }));
 
@@ -43,5 +47,9 @@ describe('AppComponent', () => {
   it(`should have as title 'vitetest'`, () => {
     expect(component.title).toEqual('vitetest');
   });
+
+  it('should create the app', () => {
+    expect(component).toMatchSnapshot();
+  });  
 
 });
